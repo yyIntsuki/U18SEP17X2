@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project
 {
@@ -10,8 +6,9 @@ namespace Project
     {
         static void Main(string[] args)
         {
+
             // Initial Card Deck in string array.
-            string[,] card_deck = new string[,]
+            string[,] card_deck = 
             {
                 {"S_A", "H_A", "C_A", "D_A"},
                 {"S_2", "H_2", "C_2", "D_2"},
@@ -28,7 +25,41 @@ namespace Project
                 {"S_K", "H_K", "C_K", "D_K"},
             };
 
-            Console.ReadLine();
+            // Shuffles card_deck using function Shuffle.
+            Random rnd = new Random();
+            Shuffle(rnd, card_deck);
+
+            // Outputs the shuffled card_deck in both dimensions.
+            for (int i = 0; i < card_deck.GetLength(0); i++)
+            {
+                for (int j = 0; j < card_deck.GetLength(1); j++)
+                {
+                    Console.WriteLine(card_deck[i, j]);
+                }
+            }
+
+            // Wait.
+            Console.ReadLine(); 
+        }
+
+        // Function to shuffle in two dimenions.
+        public static void Shuffle<T>(Random random, T[,] array)
+        {
+            int lengthRow = array.GetLength(1);
+
+            for (int i = array.Length - 1; i > 0; i--)
+            {
+                int i0 = i / lengthRow;
+                int i1 = i % lengthRow;
+
+                int j = random.Next(i + 1);
+                int j0 = j / lengthRow;
+                int j1 = j % lengthRow;
+
+                T temp = array[i0, i1];
+                array[i0, i1] = array[j0, j1];
+                array[j0, j1] = temp;
+            }
         }
     }
 }
